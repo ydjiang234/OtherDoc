@@ -1,11 +1,63 @@
-\documentclass{article}
+\documentclass[12pt]{article}
 \usepackage{geometry}
-\usepackage{times}
-\geometry{a4paper, margin=1in}
+%\usepackage{times}
+\geometry{a4paper, left=1in, right=1in, bottom=1in, top=1in}
+\usepackage{authblk}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{tabularx}
 
-\title{ABAQUS 2017 Intallation Guide on Linux}
-\author{Yadong Jiang}
+\newcommand{\tit}{Intall Abaqus 2017 on a Linux System}
+
+%Title page
+\title{\includegraphics[height=1in]{Figures/NUIG_Logo.jpg}\\ \tit}
+\author[1]{Yadong Jiang}
+\affil[1]{College of Engineering and Informatics, National University of Ireland Galway}
+\date{}
+
+
+
+
+%Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\includegraphics[height=0.5in]{Figures/NUIG_Logo.jpg}}
+%\rhead{Yadong Jiang}
+\rhead{\tit}
+\setlength{\headsep}{0.5in}
+\rfoot{Page \thepage}
+
 
 \begin{document}
+    \maketitle
     
+    \newpage
+    
+    \section*{Description}
+    
+    \begin{table}[h!]
+        \label{tb-1}
+        \caption{Environments of Installation}
+        \begin{center}
+            \begin{tabular}{l l}
+                \hline
+                Linux Distribution: & Ubuntu ???\\
+                \hline
+                Abaqus version: & Abaqus 2017 \\
+                \hline
+                Linux desktop environment: & N/A \\
+                \hline
+                
+            \end{tabular}
+        \end{center}
+    \end{table}
+    
+    
+    \section*{Prerequirments}
+    
+    
+    
+    \section*{Installation}
+    
+    \section*{Start Abaqus}
 \end{document}
