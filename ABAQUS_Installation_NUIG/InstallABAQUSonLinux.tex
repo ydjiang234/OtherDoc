@@ -9,7 +9,7 @@
 
 %define vars
 \newcommand{\tit}{Intall Abaqus 2017 on a Linux System}
-\newcommand{\ifp}{\textit{InstallationFilesRootPath}}
+\newcommand{\ifp}{\textit{InstallationFilesFolder}}
 
 %Title page
 \title{\includegraphics[height=1in]{Figures/NUIG_Logo.jpg}\\ \tit}
@@ -40,19 +40,19 @@
 \section*{Description}
 
 \begin{table}[h!]
-    \label{tb-1}
-    \caption{Environments of Installation}
-    \begin{center}
-        \begin{tabular}{l l}
-            \hline
-            Linux Distribution: & Ubuntu 14.04.4 LTS (64 bits)\\
-            \hline
-            Linux desktop environment: & N/A \\
-            \hline
-            Abaqus version: & Abaqus 2017 (64 bits) \\
-            \hline
-        \end{tabular}
-    \end{center}
+\label{tb-1}
+\caption{Environments of Installation}
+\begin{center}
+\begin{tabular}{l l}
+    \hline
+    Linux Distribution: & Ubuntu 14.04.4 LTS (64 bits)\\
+    \hline
+    Linux desktop environment: & N/A \\
+    \hline
+    Abaqus version: & Abaqus 2017 (64 bits) \\
+    \hline
+\end{tabular}
+\end{center}
 \end{table}
 
 
@@ -60,7 +60,7 @@
 
 \subsection*{Install Required Packages}
 
-\subsection{Disguise Ubuntu as CentOS}
+\subsection*{Disguise Ubuntu as CentOS}
 \begin{figure}[h!]
 \label{fig-1}
 \begin{center}
@@ -70,9 +70,9 @@
 \end{figure}
 
 
-\begin{table}
+\begin{table}[h!]
 \label{tb-2}
-\caption{Folders which contain the "Linux.sh" files}
+\caption{Folders which contain the ``Linux.sh`` files}
 \begin{center}
 \begin{tabular}{l}
     \hline
@@ -96,9 +96,26 @@
 \end{center}
 \end{table}
 
+\begin{figure}[h!]
+\label{fig-2}
+\begin{center}
+    \includegraphics[width=\textwidth]{Figures/FakeLinux.png}
+\end{center}
+\caption{Change the ``Linux.sh`` file}
+\end{figure}
+
 
 
 \section*{Installation}
 
+\begin{figure}[h!]
+    \label{fig-3}
+    \begin{center}
+        \includegraphics[width=\textwidth]{Figures/Custom_v6.png}
+    \end{center}
+    \caption{Change the license setting in the ``custom\_v6.env`` file}
+\end{figure}
+
 \section*{Start Abaqus}
+
 \end{document}
