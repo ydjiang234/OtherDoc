@@ -2,3 +2,5 @@
 *.aux
 *.log
 *.gz
+*.blg
+ABAQUS_Installation_NUIG/InstallABAQUSonLinux.bbl
