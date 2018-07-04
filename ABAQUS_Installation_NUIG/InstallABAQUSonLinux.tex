@@ -8,6 +8,7 @@
 \usepackage{tabularx}
 \usepackage{colortbl}
 \usepackage{tabularx}
+\usepackage[labelfont={it},textfont={it}]{caption}
 
 %define vars
 \newcommand{\tit}{Intall Abaqus 2017 on a Linux System}
@@ -26,7 +27,7 @@
 \setlength{\parskip}{12pt}
 
 %Title page
-\title{\includegraphics[height=1in]{Figures/NUIG_Logo.jpg}\\ \tit}
+\title{\includegraphics[height=1in]{Figures/NUIG_Logo.jpg} \vspace{100pt} \\ \tit}
 \author[1]{Yadong Jiang}
 \affil[1]{College of Engineering and Informatics, National University of Ireland Galway}
 \date{}
@@ -38,10 +39,11 @@
 %\rhead{Yadong Jiang}
 \rhead{\tit}
 \setlength{\headsep}{0.5in}
+\setlength{\footskip}{-40in}
 \rfoot{Page \thepage}
 
 %Tabular
-\def\arraystretch{1.5}
+\def\arraystretch{1.1}
 \begin{document}
 \maketitle
 
@@ -158,7 +160,7 @@ During the installation of ``Abaqus/CAE'', the ``SIMULIA FLEXnet'' should be tic
 
 After the installation, the Abaqus licence type should be changed from academic to research. To do this, one of the Abaqus environment files, ``custom\_v6.env'', should be modified. If the Abaqus is installed into its default directory, the file can be edit with ``nano'' or ``vim''.
 
-\cmd{nano /usr/DassaultSystemes/SimulationServices/V6R2017x/linux\_a64/SMA/site/\\custom\_v6.env}
+\cmd{nano /usr/DassaultSystemes/SimulationServices/V6R2017x/linux\_a64/SMA/\\site/custom\_v6.env}
 
 The line ``academic=TEACHING'' in the ``custom\_v6.env'' file should be commented or deleted, as shown in Figure \ref{fig-3}.
 
