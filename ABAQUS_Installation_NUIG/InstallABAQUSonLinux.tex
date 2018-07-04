@@ -199,4 +199,40 @@ The Abaqus CAE can be started by:
 
 It should be noted that other libraries (e.g. libstdc++.so.6, libjpeg62, etc.) may be required by Abaqus CAE. Just follow the error message given by Abaqus CAE and install the missing libraries with ``apt-get''.
 
+
+\cmd{fortCmd = ``ifort''}
+
+\cmd{fortCmd =``gfortra''}
+
+
+\cmd{compile\_fortran = [fortCmd,\\
+\hspace{95pt} '-V',\\
+\hspace{95pt} '-c', '-fPIC', '-auto', '-mP2OPT\_hpo\_vec\_divbyzero=F',\\
+\hspace{95pt} '-extend\_source',\\
+\hspace{95pt}'-fpp', '-WB', '-I\%I']
+}
+
+\cmd{compile\_fortran = [fortCmd, \\
+\hspace{95pt} '-c', '-fPIC',\\
+\hspace{95pt} '-I\%I']
+}
+
+
+\cmd{link\_sl = [fortCmd,\\
+\hspace{50pt} '-V',\\
+\hspace{50pt} '-cxxlib', '-fPIC', '-threads', '-shared',\\
+\hspace{50pt} '-Wl,--add-needed',\\
+\hspace{50pt} '\%E', '-Wl,-soname,\%U', '-o', '\%U', '\%F', '\%A', '\%L', '\%B',\\
+\hspace{50pt} '-parallel','-Wl,-Bdynamic', '-shared-intel']
+}
+
+
+
+\cmd{link\_sl = [fortCmd,\\
+\hspace{50pt} '-fPIC', '-shared',\\
+\hspace{50pt} '\%E', '-Wl,-soname,\%U', '-o',\\
+\hspace{50pt} '\%U', '\%F', '\%A', '\%L', '\%B',\\
+\hspace{50pt} '-Wl,-Bdynamic', '-lifport', '-lifcoremt']
+}
+
 \end{document}
