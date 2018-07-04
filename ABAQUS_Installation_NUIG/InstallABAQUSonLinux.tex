@@ -11,7 +11,7 @@
 
 %define vars
 \newcommand{\tit}{Intall Abaqus 2017 on a Linux System}
-\newcommand{\ifp}{\textit{InstallationFilesFolder}}
+\newcommand{\ifp}{\textit{InstallationFileFolder}}
 \newcommand{\cmd}[1]{
     \leavevmode{\parindent=0.05\textwidth\indent
     \begin{tabular}{>{\columncolor[gray]{0.8}}p{0.95\textwidth}}
@@ -23,6 +23,7 @@
 %Paragraph
 \setlength{\parindent}{0pt}
 \renewcommand{\baselinestretch}{1.3}
+\setlength{\parskip}{12pt}
 
 %Title page
 \title{\includegraphics[height=1in]{Figures/NUIG_Logo.jpg}\\ \tit}
@@ -41,14 +42,13 @@
 
 %Tabular
 \def\arraystretch{1.5}
-
 \begin{document}
 \maketitle
 
 \newpage
 
 \section*{Description}
-This document aims to guide users to install and run Abaqus 2017 on a Linux machine. Table \ref{tb-1} summarizes the installation environments used in this guidance. Although Ubuntu is specified in the table, this instruction file is also suitable for installation of Abaqus on other Linux distributions (e.g. Archlinux, Fedora, etc.). The Linux desktop environment is not required. All installation steps are completed in terminal. Thus, this document is also suitable for users who want to install and run Abaqus on a Linux server remotely via SSH connection. But it should be highlighted that the administration right is required to complete the installation.
+This document aims to guide users to install and run Abaqus 2017 on a Linux machine. Table \ref{tb-1} summarizes the installation environments used in this guidance. Although Ubuntu is specified in the table, this instruction file is also suitable for installation of Abaqus on other Linux distributions (e.g. Archlinux, Fedora, etc.). The Linux desktop environment is not required. All installation steps are completed in terminal. Thus, this document is also suitable for users who want to install and run Abaqus on a Linux server remotely via SSH connection. Furthermore, if you want to install other version of Abaqus, you can still follow the methods given by this guide. But it should be highlighted that the administration right is required to complete the installation.
 
 \begin{table}[h!]
 \caption{Environments of Installation}
@@ -69,25 +69,45 @@ This document aims to guide users to install and run Abaqus 2017 on a Linux mach
 \end{table}
 
 \section*{Prerequirments}
+\subsection*{Installation Files}
+The Abaqus installation files should be transferred to the Linux machine. In this document, the root path of the installation files is marked \ifp. It should be noted that the \ifp\ \textbf{should not contain any ``space''}.
+
+To avoid any permission issues, the permission of \ifp should be modified so that every user read/write/execute the installation files. To achieve this, simply run the following command in terminal.
+
+\cmd{sudo chmod -R 777 \ifp}
+
+\subsection*{Install Required Packages}
+The Linux Abaqus installation program is based on ksh and the FLEXNET requires the lsb-core. The two packages should be installed before the installation of Abaqus by the following command:
 
 \cmd{sudo apt-get install ksh lsb-core}
 
-
-\subsection*{Install Required Packages}
+It should be noted that ``apt-get'' is the package handling utility of Ubuntu. If you are working with other Linux distribution, the command to install packages may vary.
 
 \subsection*{Disguise Your Linux Distribution}
+When the Abaqus installation program starts, it will check your Linux release name. If your Linux distribution is not ``Red Hat Enterprise Linux Server'', ``Red Hat Enterprise Linux Client'', ``Red Hat Enterprise Linux Workstation'', ``Cent OS''or ``Suse Linux'', the program will pop out error and exit, as shown in Figure \ref{fig-1}.
+
 \begin{figure}[h!]
-\label{fig-1}
 \begin{center}
     \includegraphics[width=0.5\textwidth]{Figures/UnknowLinux.png}
 \end{center}
 \caption{Unknown linux release}
+\label{fig-1}
 \end{figure}
 
+To avoid this error, you have to disguise your Linux distribution as one of the aforementioned release names. The Abaqus installation program calls a script named ``Linux.sh'' to detect your Linux release name. You have to change the line ``DSY\_OS\_Release=`lsb\_release --short --id |sed 's/ //g'`'' to ``DSY\_OS\_Release=``CentOS'''', as shown in Figure \ref{fig-2}. By doing this, the installation program will detect your Linux release name as ``'Cent OS'.
+
+\begin{figure}[h!]
+\begin{center}
+    \includegraphics[width=\textwidth]{Figures/FakeLinux.png}
+\end{center}
+\caption{Change the ``Linux.sh'' file}
+\label{fig-2}
+\end{figure}
+
+There are eight ``Linux.sh'' scripts in the \ifp, you need to modify all the eight files. The folders which contain the scripts are listed in Table \ref{tb-2}.
 
 \begin{table}[h!]
-\label{tb-2}
-\caption{Folders which contain the ``Linux.sh`` files}
+\caption{Folders which contain the ``Linux.sh'' files}
 \begin{center}
 \begin{tabular}{l}
     \hline
@@ -109,26 +129,28 @@ This document aims to guide users to install and run Abaqus 2017 on a Linux mach
     \hline
 \end{tabular}
 \end{center}
+\label{tb-2}
 \end{table}
 
-\begin{figure}[h!]
-\label{fig-2}
-\begin{center}
-    \includegraphics[width=\textwidth]{Figures/FakeLinux.png}
-\end{center}
-\caption{Change the ``Linux.sh`` file}
-\end{figure}
-
-
-
 \section*{Installation}
+To start the installation program, the following command should be executed:
+
+\cmd{\ifp/1/StartTUI.sh}
+
+This command will start a installation program in terminal. Alternatively, if you have Linux with Desktop Environment installed, you can call the following command to start the installation program with a GUI.
+
+\cmd{\ifp/1/StartGUI.sh}
+
+When the installation program started, you can selected and install different components.
+
+
 
 \begin{figure}[h!]
     \label{fig-3}
     \begin{center}
         \includegraphics[width=\textwidth]{Figures/Custom_v6.png}
     \end{center}
-    \caption{Change the license setting in the ``custom\_v6.env`` file}
+    \caption{Change the license setting in the ``custom\_v6.env'' file}
 \end{figure}
 
 \section*{Start Abaqus}
