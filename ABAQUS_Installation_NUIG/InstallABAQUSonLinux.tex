@@ -11,7 +11,7 @@
 
 %define vars
 \newcommand{\tit}{Intall Abaqus 2017 on a Linux System}
-\newcommand{\ifp}{\textit{InstallationFileFolder}}
+\newcommand{\ifp}{\textit{InstallationFileDirectory}}
 \newcommand{\cmd}[1]{
     \leavevmode{\parindent=0.05\textwidth\indent
     \begin{tabular}{>{\columncolor[gray]{0.8}}p{0.95\textwidth}}
@@ -70,7 +70,7 @@ This document aims to guide users to install and run Abaqus 2017 on a Linux mach
 
 \section*{Prerequirments}
 \subsection*{Installation Files}
-The Abaqus installation files should be transferred to the Linux machine. In this document, the root path of the installation files is marked \ifp. It should be noted that the \ifp\ \textbf{should not contain any ``space''}.
+The Abaqus installation files should be transferred to the Linux machine. In this document, the root path of the installation files is marked \ifp. It should be noted that the \ifp\ should not contain any ``space''.
 
 To avoid any permission issues, the permission of \ifp should be modified so that every user read/write/execute the installation files. To achieve this, simply run the following command in terminal.
 
@@ -94,7 +94,7 @@ When the Abaqus installation program starts, it will check your Linux release na
 \label{fig-1}
 \end{figure}
 
-To avoid this error, you have to disguise your Linux distribution as one of the aforementioned release names. The Abaqus installation program calls a script named ``Linux.sh'' to detect your Linux release name. You have to change the line ``DSY\_OS\_Release=`lsb\_release --short --id |sed 's/ //g'`'' to ``DSY\_OS\_Release=``CentOS'''', as shown in Figure \ref{fig-2}. By doing this, the installation program will detect your Linux release name as ``'Cent OS'.
+To avoid this error, you have to disguise your Linux distribution as one of the aforementioned release names. The Abaqus installation program calls a script named ``Linux.sh'' to detect your Linux release name. You have to change the line ``DSY\_OS\_Release=`lsb\_release --short --id |sed 's/ //g'`'' to ``DSY\_OS\_Release=``CentOS'''', as shown in Figure \ref{fig-2}. In the terminal, you can modify the files with software ``nano'' or ``vim''. By doing this, the installation program will detect your Linux release name as ``'Cent OS'.
 
 \begin{figure}[h!]
 \begin{center}
@@ -104,10 +104,10 @@ To avoid this error, you have to disguise your Linux distribution as one of the 
 \label{fig-2}
 \end{figure}
 
-There are eight ``Linux.sh'' scripts in the \ifp, you need to modify all the eight files. The folders which contain the scripts are listed in Table \ref{tb-2}.
+There are eight ``Linux.sh'' scripts in the \ifp, you need to modify all the eight files. The directories which contain the scripts are listed in Table \ref{tb-2}.
 
 \begin{table}[h!]
-\caption{Folders which contain the ``Linux.sh'' files}
+\caption{Directories which contain the ``Linux.sh'' files}
 \begin{center}
 \begin{tabular}{l}
     \hline
@@ -133,26 +133,62 @@ There are eight ``Linux.sh'' scripts in the \ifp, you need to modify all the eig
 \end{table}
 
 \section*{Installation}
+First of all, login as root user before the installation. In Ubuntu, you can do this by:
+
+\cmd{sudo -s}
+
 To start the installation program, the following command should be executed:
 
 \cmd{\ifp/1/StartTUI.sh}
 
 This command will start a installation program in terminal. Alternatively, if you have Linux with Desktop Environment installed, you can call the following command to start the installation program with a GUI.
 
+It should be highlighted that you cannot start the installation program from the \ifp\ or its subdirectories. You can change your current directory with ``cd'' command.
+
 \cmd{\ifp/1/StartGUI.sh}
 
-When the installation program started, you can selected and install different components.
+When the installation program started, you can selected and install the SIMULIA products. To install Abaqus, the ``FLEXnet License Server'', ``Abaqus Simulation Services'', ``Abaqus Simulation Services CAA API'' and ``Abaqus/CAE'' need to be selected.
 
+It should be noted that the ``FLEXnet License Server'' should be installed before installing the ``Abaqus/CAE''. When install the ``FLEXnet License Server'', you need to tick the option ``Files only :  do not start the license server program. 
+''. When ``FLEXnet License Server'' is installed, you need to start the FLEXnet Server before installing ``Abaqus/CAE''. To complete this, you need to open a new terminal (or new SSH connection) and start server with following command (if you install the ``FLEXnet License Server'' into the default directory).
 
+\cmd{/usr/SIMULIA/License/2017/linux\_a64/code/bin/lmgrd}
+
+During the installation of ``Abaqus/CAE'', the ``SIMULIA FLEXnet'' should be selected as the license server. The license server of NUI Galway is ``27004@cert1.srv.nuigalway.ie''. 
+
+After the completion of installation, the ABAQUS licence type should be changed from academic to research. To do this, one of the Abaqus environment files, ``custom\_v6.env'', should be modified. If the Abaqus is installed into its default directory, the file can be edit with ``nano'' or ``vim''.
+
+\cmd{nano /usr/DassaultSystemes/SimulationServices/V6R2017x/linux\_a64/SMA/site}
+
+The line ``academic=TEACHING'' in the ``custom\_v6.env'' file should be commented or deleted, as shown in Figure \ref{fig-3}.
 
 \begin{figure}[h!]
-    \label{fig-3}
     \begin{center}
         \includegraphics[width=\textwidth]{Figures/Custom_v6.png}
     \end{center}
     \caption{Change the license setting in the ``custom\_v6.env'' file}
+    \label{fig-3}
 \end{figure}
 
+After finishing the installation, exit the root mode with command ``exit''.
+
 \section*{Start Abaqus}
+If Abaqus is installed into its default directory, it can be called with command:
+
+\cmd{/var/DassaultSystemes/SIMULIA/Commands/abaqus}
+
+To avoid typing the full path to start Abaqus, the path ``/var/DassaultSystemes/SIMULIA\\/Commands'' needs to be added to the ``PATH'' variable of Linux. The ``PATH'' variable of the System is defined in the file ``/etc/environment''. Add the Abaqus command path into the file with ``nano'' or ``vim''.
+
+\cmd{sudo nano /etc/environment}
+
+After modifying the ``/etc/environment'' file, a reboot or re-login is required to make the modification into effects. Now the Abaqus can be started by simply calling:
+
+\cmd{abaqus}
+
+The Abaqus CAE can be started by:
+
+\cmd{abaqus cae}
+
+It should be noted that other libraries (e.g. libstdc++.so.6, libjpeg62, , etc.) may be required by Abaqus CAE. Just follow the error message given by Abaqus CAE and install the missing libraries with ``apt-get''.
 
 \end{document}
