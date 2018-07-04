@@ -6,19 +6,29 @@
 \usepackage{fancyhdr}
 \usepackage{graphicx}
 \usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{tabularx}
 
 %define vars
 \newcommand{\tit}{Intall Abaqus 2017 on a Linux System}
 \newcommand{\ifp}{\textit{InstallationFilesFolder}}
+\newcommand{\cmd}[1]{
+    \leavevmode{\parindent=0.05\textwidth\indent
+    \begin{tabular}{>{\columncolor[gray]{0.8}}p{0.95\textwidth}}
+        #1
+    \end{tabular}
+    }
+}
+
+%Paragraph
+\setlength{\parindent}{0pt}
+\renewcommand{\baselinestretch}{1.3}
 
 %Title page
 \title{\includegraphics[height=1in]{Figures/NUIG_Logo.jpg}\\ \tit}
 \author[1]{Yadong Jiang}
 \affil[1]{College of Engineering and Informatics, National University of Ireland Galway}
 \date{}
-
-
-
 
 %Header and footer
 \pagestyle{fancy}
@@ -38,9 +48,9 @@
 \newpage
 
 \section*{Description}
+This document aims to guide users to install and run Abaqus 2017 on a Linux machine. Table \ref{tb-1} summarizes the installation environments used in this guidance. Although Ubuntu is specified in the table, this instruction file is also suitable for installation of Abaqus on other Linux distributions (e.g. Archlinux, Fedora, etc.). The Linux desktop environment is not required. All installation steps are completed in terminal. Thus, this document is also suitable for users who want to install and run Abaqus on a Linux server remotely via SSH connection. But it should be highlighted that the administration right is required to complete the installation.
 
 \begin{table}[h!]
-\label{tb-1}
 \caption{Environments of Installation}
 \begin{center}
 \begin{tabular}{l l}
@@ -49,18 +59,23 @@
     \hline
     Linux desktop environment: & N/A \\
     \hline
+    Administration Right: & Yes \\
+    \hline
     Abaqus version: & Abaqus 2017 (64 bits) \\
     \hline
 \end{tabular}
 \end{center}
+\label{tb-1}
 \end{table}
-
 
 \section*{Prerequirments}
 
+\cmd{sudo apt-get install ksh lsb-core}
+
+
 \subsection*{Install Required Packages}
 
-\subsection*{Disguise Ubuntu as CentOS}
+\subsection*{Disguise Your Linux Distribution}
 \begin{figure}[h!]
 \label{fig-1}
 \begin{center}
