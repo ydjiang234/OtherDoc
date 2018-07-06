@@ -47,9 +47,9 @@
 \maketitle
 
 \newpage
-
+\ 
 \section*{Description}
-This document aims to guide users to install and run Abaqus 2017 on a Linux machine. Table \ref{tb-1} summarizes the environments of Linux machine used in this guidance. Despite Ubuntu, this instruction also applies for installation of Abaqus on other Linux distributions (e.g. Archlinux, Fedora, etc.). The Linux desktop environment is not required. All installation steps are completed in terminal. Thus, this document is also suitable for users who want to utilize Abaqus on a Linux server remotely via SSH connection. Furthermore, if you want to install other version of Abaqus, the methods given by this guide can be indicative. But it should be highlighted that the administration right is required to complete the installation.
+This document aims to guide users to install and run Abaqus 2017 on a Linux machine. Table \ref{tb-1} summarizes the environments of Linux machine used in this guidance. Despite Ubuntu, this instruction also applies for installation of Abaqus on other Linux distributions (e.g. Archlinux, Fedora, etc.). The Linux desktop environment is not required. All installation steps are completed in terminal. Thus, this document is also suitable for users who want to install Abaqus on a Linux server remotely via SSH connection. Furthermore, if you want to install other version of Abaqus, the methods given by this guide can be indicative. It should be highlighted that the administration right is required to complete the installation.
 
 \begin{table}[h!]
 \caption{Environments of Installation}
@@ -71,7 +71,7 @@ This document aims to guide users to install and run Abaqus 2017 on a Linux mach
 
 \section*{Prerequirments}
 \subsection*{Installation Files}
-The Abaqus installation files should be transferred to the Linux machine. In this document, the root directory of the installation files is marked \ifp. It should be noted that the \ifp\ should not contain any ``space''.
+The Abaqus installation files should be transferred to the Linux machine. In this document, the root directory of the installation files is referred as \ifp. It should be noted that the \ifp\ should not contain any ``space''.
 
 To avoid any permission issues, the permission of \ifp\ should be modified so that the root user can read/write/execute the installation files. To achieve this simply, run the following command in terminal.
 
@@ -154,12 +154,11 @@ This command will start a installation program in terminal. Alternatively, if yo
 
 \cmd{\ifp/1/StartGUI.sh}
 
-It should be highlighted that you cannot start the installation program from the \ifp\ or its subdirectories. You can switch your current directory with ``cd'' command.
+It should be highlighted that the installation program cannot be started from the \ifp\ or its subdirectories.
 
 When the installation program starts, you can select and install the SIMULIA products. To install Abaqus, the products ``FLEXnet License Server'', ``Abaqus Simulation Services'', ``Abaqus Simulation Services CAA API'' and ``Abaqus/CAE'' are necessary.
 
-It should be noted that the ``FLEXnet License Server'' should be installed before installing the ``Abaqus/CAE''. When install the ``FLEXnet License Server'', you need to tick the option ``Files only :  do not start the license server program. 
-''. When ``FLEXnet License Server'' is installed, you need to start the FLEXnet Server before starting installing ``Abaqus/CAE''. To achieve this, you need to open a new terminal window (or a new SSH connection) and start server as root user with the following command (if you install the ``FLEXnet License Server'' into the default directory).
+It should be noted that the ``FLEXnet License Server'' should be installed before installing ``Abaqus/CAE''. When install the ``FLEXnet License Server'', you need to tick the option ``Files only :  do not start the license server program.''. When ``FLEXnet License Server'' is installed, you need to start the FLEXnet Server before starting installing ``Abaqus/CAE''. To achieve this, you need to open a new terminal window (or a new SSH connection) and start server as root user with the following command (if you install the ``FLEXnet License Server'' into the default directory).
 
 \cmd{/usr/SIMULIA/License/2017/linux\_a64/code/bin/lmgrd}
 
@@ -264,7 +263,7 @@ To verify if the linking is successful, you can try to compile and link a sample
 
 \cmd{abaqus make library=testUMAT.f }
 
-If the compilation and linking are successful, you will find two output files created, one ``*.o'' file and one ``*.so'' file (Figure \ref{fig-5}).
+If the compilation and linking are successful, you will find two output files, one ``*.o'' file and one ``*.so'' file, created, as shown in Figure \ref{fig-5}.
 
 \begin{figure}[h!]
     \begin{center}
