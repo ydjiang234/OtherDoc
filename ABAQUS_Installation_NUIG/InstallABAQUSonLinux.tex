@@ -1,7 +1,7 @@
 \documentclass[12pt]{article}
 \usepackage{geometry}
 %\usepackage{times}
-\geometry{a4paper, left=1in, right=1in, bottom=1in, top=1in}
+\geometry{a4paper, top=1in, left=1in, right=1in, bottom=1.5in}
 \usepackage{authblk}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
@@ -12,7 +12,7 @@
 
 %define vars
 \newcommand{\tit}{Intall Abaqus 2017 on a Linux System}
-\newcommand{\ifp}{\textit{IFRD}}
+\newcommand{\ifp}{\textit{Ins\_File\_Dir}}
 \newcommand{\cmd}[1]{
     \leavevmode{\parindent=0.05\textwidth\indent
     \begin{tabular}{>{\columncolor[gray]{0.8}}p{0.9\textwidth}}
@@ -38,8 +38,7 @@
 \lhead{\includegraphics[height=0.5in]{Figures/NUIG_Logo.jpg}}
 %\rhead{Yadong Jiang}
 \rhead{\tit}
-\setlength{\headsep}{0.5in}
-\setlength{\footskip}{-40in}
+\setlength{\headsep}{0.2in}
 \rfoot{Page \thepage}
 
 %Tabular
@@ -50,7 +49,7 @@
 \newpage
 
 \section*{Description}
-This document aims to guide users to install and run Abaqus 2017 on a Linux machine. Table \ref{tb-1} summarizes the installation environments used in this guidance. Although Ubuntu is specified in the table, this instruction file is also suitable for installation of Abaqus on other Linux distributions (e.g. Archlinux, Fedora, etc.). The Linux desktop environment is not required. All installation steps are completed in terminal. Thus, this document is also suitable for users who want to install and run Abaqus on a Linux server remotely via SSH connection. Furthermore, if you want to install other version of Abaqus, you can still follow the methods given by this guide. But it should be highlighted that the administration right is required to complete the installation.
+This document aims to guide users to install and run Abaqus 2017 on a Linux machine. Table \ref{tb-1} summarizes the environments of Linux machine used in this guidance. Despite Ubuntu, this instruction also applies for installation of Abaqus on other Linux distributions (e.g. Archlinux, Fedora, etc.). The Linux desktop environment is not required. All installation steps are completed in terminal. Thus, this document is also suitable for users who want to utilize Abaqus on a Linux server remotely via SSH connection. Furthermore, if you want to install other version of Abaqus, the methods given by this guide can be indicative. But it should be highlighted that the administration right is required to complete the installation.
 
 \begin{table}[h!]
 \caption{Environments of Installation}
@@ -74,19 +73,19 @@ This document aims to guide users to install and run Abaqus 2017 on a Linux mach
 \subsection*{Installation Files}
 The Abaqus installation files should be transferred to the Linux machine. In this document, the root directory of the installation files is marked \ifp. It should be noted that the \ifp\ should not contain any ``space''.
 
-To avoid any permission issues, the permission of \ifp should be modified so that every user read/write/execute the installation files. To achieve this, simply run the following command in terminal.
+To avoid any permission issues, the permission of \ifp\ should be modified so that the root user can read/write/execute the installation files. To achieve this simply, run the following command in terminal.
 
 \cmd{sudo chmod -R 777 \ifp}
 
 \subsection*{Install Required Packages}
-The Linux Abaqus installation program is based on ksh and the FLEXNET requires the lsb-core. The two packages should be installed before the installation of Abaqus by the following command:
+The Linux Abaqus installation program is based on ``ksh'' while the FLEXNET requires the ``lsb-core''. The two packages should be installed before starting the installation of Abaqus.
 
 \cmd{sudo apt-get install ksh lsb-core}
 
-It should be noted that ``apt-get'' is the package handling utility of Ubuntu. If you are working with other Linux distribution, the command to install packages may vary.
+It should be noted that ``apt-get'' is the package handling utility of Ubuntu. If you are working with other Linux distribution, the command of installing packages may vary.
 
 \subsection*{Disguise Your Linux Distribution}
-When the Abaqus installation program starts, it will check your Linux release name. If your Linux distribution is not ``Red Hat Enterprise Linux Server'', ``Red Hat Enterprise Linux Client'', ``Red Hat Enterprise Linux Workstation'', ``Cent OS''or ``Suse Linux'', the program will pop out error and exit, as shown in Figure \ref{fig-1}.
+The Abaqus installation program will check your Linux release name. If your Linux distribution is not ``Red Hat Enterprise Linux Server'', ``Red Hat Enterprise Linux Client'', ``Red Hat Enterprise Linux Workstation'', ``Cent OS''or ``Suse Linux'', the program will pop out error and exit, as shown in Figure \ref{fig-1}.
 
 \begin{figure}[h!]
 \begin{center}
@@ -96,7 +95,15 @@ When the Abaqus installation program starts, it will check your Linux release na
 \label{fig-1}
 \end{figure}
 
-To avoid this error, you have to disguise your Linux distribution as one of the aforementioned release names. The Abaqus installation program calls a script named ``Linux.sh'' to detect your Linux release name. In this file, you have to change the line ``DSY\_OS\_Release =`lsb\_release --short --id |sed 's/ //g'`'' to ``DSY\_OS\_Release=``CentOS'''', as shown in Figure \ref{fig-2}. In the terminal, you can edit text script file with software ``nano'' or ``vim''. By modifying the ``Linux.sh'' script, the installation program will detect your Linux release name as ``Cent OS''.
+To avoid this error, you have to disguise your Linux distribution as one of the aforementioned Linux release names. To achieve this, you have to modified the ``Linux.sh'' file, a script which is called by the Abaqus installation program to detect your Linux release name. In this script, you have to change the line:
+
+\cmd{``DSY\_OS\_Release =`lsb\_release --short --id |sed 's/ //g'`''}
+
+to
+
+\cmd{``DSY\_OS\_Release=``CentOS''''}
+
+In terminal, you can edit text script file with software ``nano'' or ``vim''. The modification results are highlighted in Figure \ref{fig-2}. By modifying the ``Linux.sh'' script, the installation program will detect your Linux release name as ``Cent OS''.
 
 \begin{figure}[h!]
 \begin{center}
@@ -152,13 +159,13 @@ It should be highlighted that you cannot start the installation program from the
 When the installation program starts, you can select and install the SIMULIA products. To install Abaqus, the products ``FLEXnet License Server'', ``Abaqus Simulation Services'', ``Abaqus Simulation Services CAA API'' and ``Abaqus/CAE'' are necessary.
 
 It should be noted that the ``FLEXnet License Server'' should be installed before installing the ``Abaqus/CAE''. When install the ``FLEXnet License Server'', you need to tick the option ``Files only :  do not start the license server program. 
-''. When ``FLEXnet License Server'' is installed, you need to start the FLEXnet Server before starting installing ``Abaqus/CAE''. To achieve this, you need to open a new terminal window (or a new SSH connection) and start server with the following command (if you install the ``FLEXnet License Server'' into the default directory).
+''. When ``FLEXnet License Server'' is installed, you need to start the FLEXnet Server before starting installing ``Abaqus/CAE''. To achieve this, you need to open a new terminal window (or a new SSH connection) and start server as root user with the following command (if you install the ``FLEXnet License Server'' into the default directory).
 
 \cmd{/usr/SIMULIA/License/2017/linux\_a64/code/bin/lmgrd}
 
 During the installation of ``Abaqus/CAE'', the ``SIMULIA FLEXnet'' should be ticked as the license server. The license server of NUI Galway is ``27004@cert1.srv.nuigalway.ie''. 
 
-After the installation, the Abaqus licence type should be changed from academic to research. To do this, one of the Abaqus environment files, ``custom\_v6.env'', should be modified. If the Abaqus is installed into its default directory, the file can be edit with ``nano'' or ``vim''.
+After the installation, the Abaqus licence type should be changed from academic to research. To do this, one of the Abaqus environment files, ``custom\_v6.env'', should be modified. If the Abaqus is installed into its default directory, the file can be edit with the command:
 
 \cmd{nano /usr/DassaultSystemes/SimulationServices/V6R2017x/linux\_a64/SMA/\\site/custom\_v6.env}
 
@@ -206,9 +213,9 @@ On Linux, the default C/C++ compiler and Fortran compiler which Abaqus will sear
 
 \cmd{sudo apt-get install gcc gfortran}
 
-Then, one of the Abaqus environment files, ``lnx86\_64.env'', should be modified. If you installed Abaqus into the default directory, the file is located in ``/usr/DassaultSystemes/SimulationServices/V6R2017x/linux\_a64/SMA/site''. It is always recommended to create a backup file before editing the environment file.
+Then, one of the Abaqus environment files, ``lnx86\_64.env'', should be modified. If you installed Abaqus into the default directory, the file is located in ``/usr/DassaultSystemes/ SimulationServices/V6R2017x/linux\_a64/SMA/site''. It is always recommended to create a backup file before editing the environment file.
 
-To change the default Fortran compiler, change the line:
+To switch the default Fortran compiler, change the line:
 
 \cmd{fortCmd = ``ifort''}
 
@@ -257,7 +264,7 @@ To verify if the linking is successful, you can try to compile and link a sample
 
 \cmd{abaqus make library=testUMAT.f }
 
-If the compilation and linking are successful, you will find two output files created, one '*.o' file and one '*.so' file (Figure \ref{fig-5}).
+If the compilation and linking are successful, you will find two output files created, one ``*.o'' file and one ``*.so'' file (Figure \ref{fig-5}).
 
 \begin{figure}[h!]
     \begin{center}
