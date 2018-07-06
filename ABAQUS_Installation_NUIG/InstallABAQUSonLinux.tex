@@ -199,11 +199,24 @@ The Abaqus CAE can be started by:
 
 It should be noted that other libraries (e.g. libstdc++.so.6, libjpeg62, etc.) may be required by Abaqus CAE. Just follow the error message given by Abaqus CAE and install the missing libraries with ``apt-get''.
 
+\section*{Link C/C++ and Fortran compiler}
+\subsection*{Change the default Fortran compiler}
+
+On Linux, the default C/C++ compiler and Fortran compiler which Abaqus will search for are ``gcc'' and ``ifort'', respectively. As the usage of free version ``ifort'' is very limited, the ``gfortran'' compiler is considered as an alternative during linking. To do this, these two compilers should be installed:
+
+\cmd{sudo apt-get install gcc gfortran}
+
+Then, one of the Abaqus environment files, ``lnx86\_64.env'', should be modified. If you installed Abaqus into the default directory, the file is located in ``/usr/DassaultSystemes/SimulationServices/V6R2017x/linux\_a64/SMA/site''. It is always recommended to create a backup file before editing the environment file.
+
+To change the default Fortran compiler, change the line:
 
 \cmd{fortCmd = ``ifort''}
 
-\cmd{fortCmd =``gfortra''}
+to:
 
+\cmd{fortCmd =``gfortran''}
+
+Correspondingly, the compiling arguments should be modified from:
 
 \cmd{compile\_fortran = [fortCmd,\\
 \hspace{95pt} '-V',\\
@@ -212,21 +225,25 @@ It should be noted that other libraries (e.g. libstdc++.so.6, libjpeg62, etc.) m
 \hspace{95pt}'-fpp', '-WB', '-I\%I']
 }
 
+to:
+
 \cmd{compile\_fortran = [fortCmd, \\
 \hspace{95pt} '-c', '-fPIC',\\
 \hspace{95pt} '-I\%I']
 }
 
+Then, the linking arguments should also be changed from :
 
 \cmd{link\_sl = [fortCmd,\\
 \hspace{50pt} '-V',\\
 \hspace{50pt} '-cxxlib', '-fPIC', '-threads', '-shared',\\
 \hspace{50pt} '-Wl,--add-needed',\\
 \hspace{50pt} '\%E', '-Wl,-soname,\%U', '-o', '\%U', '\%F', '\%A', '\%L', '\%B',\\
-\hspace{50pt} '-parallel','-Wl,-Bdynamic', '-shared-intel']
+\hspace{50pt} '-parallel',
+'-Wl,-Bdynamic', '-shared-intel']
 }
 
-
+to:
 
 \cmd{link\_sl = [fortCmd,\\
 \hspace{50pt} '-fPIC', '-shared',\\
@@ -234,5 +251,21 @@ It should be noted that other libraries (e.g. libstdc++.so.6, libjpeg62, etc.) m
 \hspace{50pt} '\%U', '\%F', '\%A', '\%L', '\%B',\\
 \hspace{50pt} '-Wl,-Bdynamic', '-lifport', '-lifcoremt']
 }
+
+\subsection*{Verify the linking}
+To verify if the linking is successful, you can try to compile and link a sample Fortran file.
+
+\cmd{abaqus make library=testUMAT.f }
+
+If the compilation and linking are successful, you will find two output files created, one '*.o' file and one '*.so' file (Figure \ref{fig-5}).
+
+\begin{figure}[h!]
+    \begin{center}
+        \includegraphics[width=0.7\textwidth]{Figures/CompileResults.PNG}
+    \end{center}
+    \caption{Output files of the compilation and linking}
+    \label{fig-5}
+\end{figure}
+
 
 \end{document}
